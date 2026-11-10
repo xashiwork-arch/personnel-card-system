@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پرزنت سامانه مدیریت کارت پرسنلی / یزدان مطهر قائم وسطی</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Vazirmatn Persian Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap">
+  <style>
+    body {
+      font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, sans-serif;
+      direction: rtl;
+      background-color: #0b1844;
+      background-image: url('/images/site-bg.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      color: #f8fafc;
+      overflow: hidden;
+      user-select: none;
+    }
+    .slide {
+      opacity: 0;
+      transform: scale(0.95) translateY(20px);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem;
+    }
+    .slide.active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+      z-index: 10;
+    }
+    .slide-up-item {
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all 0.4s ease-out;
+    }
+    .slide.active .slide-up-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .card-glow {
+      box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.2);
+    }
+  </style>
+</head>
+<body class="h-screen w-screen relative">
+
+  <!-- Top Presentation Toolbar -->
+  <header class="absolute top-0 inset-x-0 h-16 px-8 flex items-center justify-between z-30 bg-slate-950/70 backdrop-blur-md border-b border-slate-800">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-blue-600 flex items-center justify-center font-bold text-white text-sm shadow-md">
+        YM
+      </div>
+      <div>
+        <h2 class="text-sm font-extrabold text-white">سامانه مدیریت کارت پرسنلی</h2>
+        <span class="text-xs text-purple-400 font-medium">یزدان مطهر قائم وسطی</span>
+      </div>
+    </div>
+
+    <!-- Center Slide Counter -->
+    <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1 rounded-full text-xs font-mono font-bold text-slate-300">
+      <span>اسلاید</span>
+      <span id="current-slide-num" class="text-blue-400 text-sm">۱</span>
+      <span>از</span>
+      <span id="total-slides-num" class="text-slate-400">۷</span>
+    </div>
+
+    <!-- Right Actions -->
+    <div class="flex items-center gap-2">
+      <!-- Download Real PPTX File -->
+      <a href="/downloads/yazdan_motahar_presentation.pptx" download 
+        class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-emerald-600/30 transition-all">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        <span>دانلود فایل پاورپوینت (.pptx)</span>
+      </a>
+
+      <!-- Fullscreen Toggle -->
+      <button onclick="toggleFullScreen()" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300" title="تمام صفحه (کلید F)">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+      </button>
+
+      <!-- Return to App -->
+      <a href="/" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300" title="بازگشت به پنل سامانه">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="absolute top-16 inset-x-0 h-1 bg-slate-800 z-30">
+    <div id="progress-bar" class="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-300 w-1/7"></div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- SLIDES STAGE -->
+  <!-- ===================================================================== -->
+  <div class="w-full h-full relative pt-16">
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- SLIDE 1: Cover / Title -->
+    <!-- ----------------------------------------------------------------- -->
+    <div class="slide active" data-slide="1">
+      <div class="max-w-4xl mx-auto text-center space-y-6">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold slide-up-item">
+          <span class="w-2 h-2 rounded-full bg-blue-400 animate-ping"></span>
+          طرح نوسازی و تحول دیجیتال فرآیندهای پرسنلی
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight slide-up-item" style="transition-delay: 100ms;">
+          سامانه مدیریت کارت پرسنلی
+          <div class="text-3xl sm:text-5xl mt-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+            یزدان مطهر قائم وسطی
+          </div>
+        </h1>
+
+        <p class="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed slide-up-item" style="transition-delay: 200ms;">
+          مدیریت متمرکز دریافت تصاویر فرم‌ها از مسئولان ۸ مجموعه، چرخه هوشمند ۶ مرحله‌ای صدور، ثبت دقیق زمان ارسال و گفتگوی داخلی.
+        </p>
+
+        <div class="pt-6 flex justify-center gap-4 slide-up-item" style="transition-delay: 300ms;">
+          <button onclick="nextSlide()" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-base shadow-xl shadow-blue-500/25 flex items-center gap-2 transition-all">
+            <span>شروع ارائه و بررسی چالش‌ها</span>
+            <svg class="w-5 h-5 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+        </div>
+
+        <div class="pt-2 flex flex-col items-center justify-center gap-1.5 slide-up-item" style="transition-delay: 350ms;">
+          <span class="text-xs text-slate-400 font-medium">ساخته شده توسط:</span>
+          <img src="/images/creator-logo.png" alt="ساخته شده توسط" class="h-9 w-auto max-w-[200px] object-contain opacity-80 hover:opacity-100 transition-opacity">
+        </div>
+      </div>
+    </div>
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- SLIDE 2: Problem & Challenges -->
+    <!-- ----------------------------------------------------------------- -->
+    <div class="slide" data-slide="2">
+      <div class="max-w-6xl mx-auto w-full space-y-6">
+        <div>
+          <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">چالش‌های وضع موجود</span>
+          <h2 class="text-3xl font-black text-white mt-1">چرا روش‌های سنتی پاسخگوی سازمان نبود؟</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2 card-glow">
+            <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">۱</div>
+            <h3 class="text-lg font-bold text-white">ارسال پراکنده در پیام‌رسان‌ها</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              ارسال مدارک توسط مسئولان ۸ مجموعه از طریق پیام‌رسان‌های مختلف باعث مفقود شدن فرم‌ها، دانلود نشدن تصاویر و گم شدن درخواست‌ها در چت‌های روزمره می‌شد.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2 card-glow">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">۲</div>
+            <h3 class="text-lg font-bold text-white">عدم ثبت تاریخ و ساعت دقیق</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              مشخص نبود هر فرم در چه روز و چه ساعتی تحویل شده است؛ این موضوع باعث بروز ادعاهای مغایر و عدم امکان ارزیابی عملکرد و پاسخگویی به پرسنل می‌شد.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2 card-glow">
+            <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">۳</div>
+            <h3 class="text-lg font-bold text-white">بلاتکلیفی پرسنل از وضعیت کارت</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              هیچ راهی وجود نداشت که مسئول بداند فرم او در حال حاضر کجاست؟ آیا مدیر آن را دیده؟ آیا در حال آماده‌سازی فایل است یا در لابراتوار چاپ؟
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2 card-glow">
+            <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">۴</div>
+            <h3 class="text-lg font-bold text-white">عکس‌های نامنظم و وارونه</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              تصاویر گوشی‌ها اغلب به صورت کج یا افقی گرفته می‌شد و مدیر مجبور بود برای خواندن هر مدرک، عکس‌ها را در نرم‌افزارهای جانبی ذخیره و دستی بچرخاند.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- SLIDE 3: Organizational Hierarchy (8 Branches) -->
+    <!-- ----------------------------------------------------------------- -->
+    <div class="slide" data-slide="3">
+      <div class="max-w-6xl mx-auto w-full space-y-6">
+        <div>
+          <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">سلسله‌مراتب سازمانی</span>
+          <h2 class="text-3xl font-black text-white mt-1">پوشش یکپارچه ۸ مجموعه و مسئولان مربوطه</h2>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 pt-2">
+          <!-- Branch 1 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border border-blue-500/40 space-y-2 card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-7 h-7 rounded-lg bg-blue-500/20 text-blue-400 font-bold text-xs flex items-center justify-center">۱</span>
+              <span class="text-[10px] text-slate-400 font-mono">officer1 / rasouli</span>
+            </div>
+            <h3 class="font-bold text-base text-white">هایپر آرین</h3>
+            <p class="text-xs text-blue-300 font-medium">👤 مسئول: خانم رسولی</p>
+            <div class="pt-1 flex items-center justify-between text-[11px] border-t border-slate-800/80 text-slate-400">
+              <span>رمز عبور:</span>
+              <span class="font-mono text-emerald-400 font-bold tracking-wider">841203</span>
+            </div>
+          </div>
+
+          <!-- Branch 2 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border border-purple-500/40 space-y-2 card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-400 font-bold text-xs flex items-center justify-center">۲</span>
+              <span class="text-[10px] text-slate-400 font-mono">officer2 / razavi</span>
+            </div>
+            <h3 class="font-bold text-base text-white">هایپر قدمت</h3>
+            <p class="text-xs text-purple-300 font-medium">👤 مسئول: خانم رضوی</p>
+            <div class="pt-1 flex items-center justify-between text-[11px] border-t border-slate-800/80 text-slate-400">
+              <span>رمز عبور:</span>
+              <span class="font-mono text-emerald-400 font-bold tracking-wider">729514</span>
+            </div>
+          </div>
+
+          <!-- Branch 3 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border border-amber-500/40 space-y-2 card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 font-bold text-xs flex items-center justify-center">۳</span>
+              <span class="text-[10px] text-slate-400 font-mono">officer3 / sabbaghi_gh</span>
+            </div>
+            <h3 class="font-bold text-base text-white">مشتاق قائمشهر</h3>
+            <p class="text-xs text-amber-300 font-medium">👤 مسئول: خانم صباغی</p>
+            <div class="pt-1 flex items-center justify-between text-[11px] border-t border-slate-800/80 text-slate-400">
+              <span>رمز عبور:</span>
+              <span class="font-mono text-emerald-400 font-bold tracking-wider">638195</span>
+            </div>
+          </div>
+
+          <!-- Branch 4 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border border-emerald-500/40 space-y-2 card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold text-xs flex items-center justify-center">۴</span>
+              <span class="text-[10px] text-slate-400 font-mono">officer4 / mehdipour</span>
+            </div>
+            <h3 class="font-bold text-base text-white">مشتاق آمل</h3>
+            <p class="text-xs text-emerald-300 font-medium">👤 مسئول: خانم مهدی پور</p>
+            <div class="pt-1 flex items-center justify-between text-[11px] border-t border-slate-800/80 text-slate-400">
+              <span>رمز عبور:</span>
+              <span class="font-mono text-emerald-400 font-bold tracking-wider">519482</span>
+            </div>
+          </div>
+
+          <!-- Branch 5 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border border-cyan-500/40 space-y-2 card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 font-bold text-xs flex items-center justify-center">۵</span>
+              <span class="text-[10px] text-slate-400 font-mono">officer5 / babajanzadeh</span>
+            </div>
+            <h3 class="font-bold text-base text-white">مشتاق بهنمیر</h3>
+            <p class="text-xs text-cyan-300 font-medium">👤 مسئول: خانم باباجان زاده</p>
+            <div class="pt-1 flex items-center justify-between text-[11px] border-t border-slate-800/80 text-slate-400">
+              <span>رمز عبور:</span>
+              <span class="font-mono text-emerald-400 font-bold tracking-wider">926371</span>
+            </div>
+          </div>
+
+          <!-- Branch 6 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border border-rose-500/40 space-y-2 card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-7 h-7 rounded-lg bg-rose-500/20 text-rose-400 font-bold text-xs flex items-center justify-center">۶</span>
+              <span class="text-[10px] text-slate-400 font-mono">officer6 / sadeghi</span>
+            </div>
+            <h3 class="font-bold text-base text-white">مشتاق نکا</h3>
+            <p class="text-xs text-rose-300 font-medium">👤 مسئول: خانم صادقی</p>
+            <div class="pt-1 flex items-center justify-between text-[11px] border-t border-slate-800/80 text-slate-400">
+              <span>رمز عبور:</span>
+              <span class="font-mono text-emerald-400 font-bold tracking-wider">384729</span>
+            </div>
+          </div>
+
+          <!-- Branch 7 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border border-indigo-500/40 space-y-2 card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 font-bold text-xs flex items-center justify-center">۷</span>
+              <span class="text-[10px] text-slate-400 font-mono">officer7 / sabbaghi_sa</span>
+            </div>
+            <h3 class="font-bold text-base text-white">مشتاق ساری</h3>
+            <p class="text-xs text-indigo-300 font-medium">👤 مسئول: خانم صباغی</p>
+            <div class="pt-1 flex items-center justify-between text-[11px] border-t border-slate-800/80 text-slate-400">
+              <span>رمز عبور:</span>
+              <span class="font-mono text-emerald-400 font-bold tracking-wider">471938</span>
+            </div>
+          </div>
+
+          <!-- Branch 8 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border border-teal-500/40 space-y-2 card-glow">
+            <div class="flex items-center justify-between">
+              <span class="w-7 h-7 rounded-lg bg-teal-500/20 text-teal-400 font-bold text-xs flex items-center justify-center">۸</span>
+              <span class="text-[10px] text-slate-400 font-mono">officer8 / sabbaghi_ar</span>
+            </div>
+            <h3 class="font-bold text-base text-white">فروشگاه آرین</h3>
+            <p class="text-xs text-teal-300 font-medium">👤 مسئول: خانم صباغی</p>
+            <div class="pt-1 flex items-center justify-between text-[11px] border-t border-slate-800/80 text-slate-400">
+              <span>رمز عبور:</span>
+              <span class="font-mono text-emerald-400 font-bold tracking-wider">652814</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 text-xs text-center text-slate-400">
+          🔒 **تفکیک کامل دسترسی:** هر مسئول فقط پرونده‌ها و پیام‌های مجموعه خود را می‌بیند؛ در حالی‌که مدیریت کل بر تمام ۸ مجموعه اشراف و نظارت دارد.
+        </div>
+      </div>
+    </div>
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- SLIDE 4: 6 Stages Workflow -->
+    <!-- ----------------------------------------------------------------- -->
+    <div class="slide" data-slide="4">
+      <div class="max-w-6xl mx-auto w-full space-y-6">
+        <div>
+          <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">گردش کار مکانیزه</span>
+          <h2 class="text-3xl font-black text-white mt-1">چرخه ۶ مرحله‌ای صدور کارت پرسنلی</h2>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-3 pt-2">
+          <!-- Stage 1 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border-t-4 border-amber-400 text-center space-y-2">
+            <div class="w-8 h-8 mx-auto rounded-full bg-amber-400/20 text-amber-300 font-bold flex items-center justify-center text-xs">۱</div>
+            <h4 class="font-black text-white text-sm">دیده نشده</h4>
+            <p class="text-[11px] text-slate-400 leading-tight">لحظه ثبت آنلاین توسط مسئول بخش</p>
+          </div>
+
+          <!-- Stage 2 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border-t-4 border-sky-400 text-center space-y-2">
+            <div class="w-8 h-8 mx-auto rounded-full bg-sky-400/20 text-sky-300 font-bold flex items-center justify-center text-xs">۲</div>
+            <h4 class="font-black text-white text-sm">دیده شده</h4>
+            <p class="text-[11px] text-slate-400 leading-tight">بازبینی مدارک و صحت‌سنجی اولیه</p>
+          </div>
+
+          <!-- Stage 3 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border-t-4 border-purple-400 text-center space-y-2">
+            <div class="w-8 h-8 mx-auto rounded-full bg-purple-400/20 text-purple-300 font-bold flex items-center justify-center text-xs">۳</div>
+            <h4 class="font-black text-white text-sm">آماده‌سازی فایل</h4>
+            <p class="text-[11px] text-slate-400 leading-tight">روتوش عکس ۳×۴ و قالب گرافیکی کارت</p>
+          </div>
+
+          <!-- Stage 4 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border-t-4 border-orange-400 text-center space-y-2">
+            <div class="w-8 h-8 mx-auto rounded-full bg-orange-400/20 text-orange-300 font-bold flex items-center justify-center text-xs">۴</div>
+            <h4 class="font-black text-white text-sm">ارسال به لابراتوار</h4>
+            <p class="text-[11px] text-slate-400 leading-tight">تحویل به خط چاپ و کدگذاری چیپ هوشمند</p>
+          </div>
+
+          <!-- Stage 5 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border-t-4 border-emerald-400 text-center space-y-2">
+            <div class="w-8 h-8 mx-auto rounded-full bg-emerald-400/20 text-emerald-300 font-bold flex items-center justify-center text-xs">۵</div>
+            <h4 class="font-black text-white text-sm">چاپ شده</h4>
+            <p class="text-[11px] text-slate-400 leading-tight">کارت فیزیکی چاپ و آماده توزیع شده</p>
+          </div>
+
+          <!-- Stage 6 -->
+          <div class="p-4 rounded-2xl bg-slate-900/90 border-t-4 border-teal-400 text-center space-y-2">
+            <div class="w-8 h-8 mx-auto rounded-full bg-teal-400/20 text-teal-300 font-bold flex items-center justify-center text-xs">۶</div>
+            <h4 class="font-black text-white text-sm">تحویل داده شده</h4>
+            <p class="text-[11px] text-slate-400 leading-tight">تحویل نهایی به پرسنل و ثبت در بایگانی</p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-blue-950/40 border border-blue-500/30 text-xs text-center text-blue-300 font-medium">
+          ⚡ امکان تغییر وضعیت هم به صورت تک‌به‌تک و هم به صورت گروهی (انتخاب چندتایی) برای تسریع در کار فراهم است.
+        </div>
+      </div>
+    </div>
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- SLIDE 5: Key Innovation Features -->
+    <!-- ----------------------------------------------------------------- -->
+    <div class="slide" data-slide="5">
+      <div class="max-w-6xl mx-auto w-full space-y-6">
+        <div>
+          <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">نوآوری‌های فنی اختصاصی</span>
+          <h2 class="text-3xl font-black text-white mt-1">ویژگی‌های هوشمند متناسب با نیاز سازمان</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+          <!-- Feat 1 -->
+          <div class="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-sky-500/20 text-sky-400 flex items-center justify-center">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 class="font-black text-white text-base">ثبت دقیق تاریخ شمسی و ساعت</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              ثبت خودکار ساعت و تاریخ جلالی فرم‌ها (مانند ۱۴۰۵/۰۸/۲۰ ساعت ۱۴:۳۵)؛ این مستندسازی دقیق جلوی هرگونه تاخیر یا اشتباه را می‌گیرد.
+            </p>
+          </div>
+
+          <!-- Feat 2 -->
+          <div class="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            </div>
+            <h3 class="font-black text-white text-base">گفتگو و پیام‌رسانی داخلی</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              مسئول هر بخش می‌تواند مستقیماً از داخل سامانه برای مدیر پیام بگذارد و مدیر به او پاسخ دهد؛ بدون نیاز به خروج از سامانه و پیام‌رسان‌های متفرقه.
+            </p>
+          </div>
+
+          <!-- Feat 3 -->
+          <div class="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            </div>
+            <h3 class="font-black text-white text-base">چرخش ۹۰ درجه و زوم عکس</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              نمایشگر اختصاصی با امکان چرخش ۹۰ درجه برای فرم‌هایی که با گوشی افقی گرفته شده‌اند، به همراه زوم دقیق و دانلود مستقیم فایل اصلی.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- SLIDE 6: ROI & Organizational Impact -->
+    <!-- ----------------------------------------------------------------- -->
+    <div class="slide" data-slide="6">
+      <div class="max-w-6xl mx-auto w-full space-y-6">
+        <div>
+          <span class="text-xs font-bold text-teal-400 uppercase tracking-wider">نتایج و دستاوردها</span>
+          <h2 class="text-3xl font-black text-white mt-1">ارزش افزوده استقرار سامانه در سازمان</h2>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+          <div class="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 text-center space-y-2 card-glow">
+            <div class="text-4xl font-black text-emerald-400">۱۰۰٪</div>
+            <h4 class="font-bold text-white text-base">حذف مفقودی نامه‌ها</h4>
+            <p class="text-xs text-slate-400">بایگانی ابری متمرکز با شناسه رهگیری منحصربه‌فرد</p>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 text-center space-y-2 card-glow">
+            <div class="text-4xl font-black text-sky-400">۶۵٪</div>
+            <h4 class="font-bold text-white text-base">تسریع در زمان چاپ</h4>
+            <p class="text-xs text-slate-400">کاهش معطلی فرآیند از چند هفته به کمتر از ۴۸ ساعت</p>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 text-center space-y-2 card-glow">
+            <div class="text-4xl font-black text-purple-400">۰ خطا</div>
+            <h4 class="font-bold text-white text-base">دقت کامل مشخصات</h4>
+            <p class="text-xs text-slate-400">تفکیک شفاف نوع درخواست (دفعه اول، چاپ مجدد، اصلاح)</p>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 text-center space-y-2 card-glow">
+            <div class="text-4xl font-black text-amber-400">لحظه‌ای</div>
+            <h4 class="font-bold text-white text-base">گزارش‌گیری مدیریتی</h4>
+            <p class="text-xs text-slate-400">خروجی مستقیم به فایل اکسل استاندارد با یک کلیک</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- SLIDE 7: Conclusion & Live Demo -->
+    <!-- ----------------------------------------------------------------- -->
+    <div class="slide" data-slide="7">
+      <div class="max-w-4xl mx-auto text-center space-y-6">
+        <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-blue-600 via-purple-600 to-indigo-600 flex items-center justify-center shadow-2xl shadow-purple-500/30">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        </div>
+
+        <h2 class="text-3xl sm:text-5xl font-black text-white">
+          سامانه آماده بهره‌برداری و دمو زنده
+        </h2>
+        <p class="text-base text-slate-400 max-w-xl mx-auto">
+          یزدان مطهر قائم وسطی؛ یکپارچه‌سازی کامل دریافت فرم‌ها، پیگیری ۶ مرحله‌ای و ارتباط با مسئولان ۸ مجموعه
+        </p>
+
+        <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 max-w-md mx-auto space-y-2 text-right text-xs">
+          <div class="flex justify-between text-slate-300">
+            <span class="text-slate-500">آدرس سامانه:</span>
+            <span class="font-mono font-bold text-blue-400">http://localhost:3000</span>
+          </div>
+          <div class="flex justify-between text-slate-300">
+            <span class="text-slate-500">حساب مدیر کل:</span>
+            <span class="font-mono text-purple-300 font-bold">admin / 951753</span>
+          </div>
+          <div class="flex justify-between text-slate-300">
+            <span class="text-slate-500">رمز عبور شعب:</span>
+            <span class="font-mono text-emerald-300 font-bold">رمز ۶ رقمی اختصاصی هر شعبه</span>
+          </div>
+        </div>
+
+        <div class="pt-4 flex justify-center gap-3">
+          <a href="/" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30 transition-all">
+            ورود به سامانه زنده و اجرای دمو
+          </a>
+          <a href="/downloads/yazdan_motahar_presentation.pptx" download class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm transition-all flex items-center gap-2">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            دانلود نسخه PowerPoint
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="absolute bottom-6 inset-x-8 flex items-center justify-between z-30 pointer-events-none">
+    <div class="text-xs text-slate-500 pointer-events-auto">
+      راهنمای کلیدها: <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-[10px]">کلیدهای جهت‌نما ← / →</kbd> یا <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-[10px]">Space</kbd>
+    </div>
+
+    <div class="flex items-center gap-2 pointer-events-auto">
+      <button onclick="prevSlide()" class="p-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white border border-slate-800 transition-all" title="اسلاید قبل">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <button onclick="nextSlide()" class="p-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition-all" title="اسلاید بعد">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+    </div>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    document.getElementById('total-slides-num').textContent = totalSlides;
+
+    function showSlide(index) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+      currentSlide = index;
+
+      slides.forEach(slide => {
+        const slideNum = parseInt(slide.getAttribute('data-slide'));
+        slide.classList.toggle('active', slideNum === currentSlide);
+      });
+
+      document.getElementById('current-slide-num').textContent = currentSlide;
+      document.getElementById('progress-bar').style.width = ((currentSlide / totalSlides) * 100) + '%';
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) showSlide(currentSlide - 1);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowRight' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullScreen();
+      } else if (e.key === 'Home') {
+        showSlide(1);
+      } else if (e.key === 'End') {
+        showSlide(totalSlides);
+      }
+    });
+  </script>
+</body>
+</html>

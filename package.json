@@ -1,0 +1,22 @@
+{
+  "name": "personnel-card-system",
+  "version": "1.0.0",
+  "description": "سامانه مدیریت و ارسال درخواست کارت پرسنلی و نامه‌های مربوطه",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pptxgenjs": "^4.0.1"
+  }
+}
