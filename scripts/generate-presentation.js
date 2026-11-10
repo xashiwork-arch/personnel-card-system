@@ -541,12 +541,12 @@ async function createPresentation() {
       align: 'center'
     });
 
-    slide.addText('ورود به پنل آنلاین: http://localhost:3000\n\nحساب مدیر ارشد: admin | رمز: 951753 (یا admin123)\nحساب مسئولان ۸ مجموعه: رمز عبور ۶ رقمی مجزا و اختصاصی برای هر شعبه', {
+    slide.addText('ورود به پنل آنلاین (همین سیستم): http://localhost:3000\nدسترسی شبکه وای‌فای (گوشی و سایر سیستم‌ها): http://192.168.8.113:3000\n\nحساب مدیر ارشد: admin | رمز: 951753 (یا admin123)\nحساب مسئولان ۸ مجموعه: رمز عبور ۶ رقمی مجزا و اختصاصی برای هر شعبه', {
       x: 2.0,
-      y: 3.2,
+      y: 3.1,
       w: 9.33,
-      h: 1.6,
-      fontSize: 14,
+      h: 1.8,
+      fontSize: 13.5,
       color: THEME.accentBlue,
       fontFace: THEME.fontFace,
       align: 'center'
@@ -554,7 +554,7 @@ async function createPresentation() {
 
     slide.addText('با سپاس از توجه مدیران و اعضای محترم جلسه', {
       x: 2.0,
-      y: 5.0,
+      y: 5.1,
       w: 9.33,
       h: 0.5,
       fontSize: 15,
@@ -562,6 +562,145 @@ async function createPresentation() {
       fontFace: THEME.fontFace,
       align: 'center',
       bold: true
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // SLIDE 8: Complete Credentials & Passwords
+  // ---------------------------------------------------------------------------
+  {
+    const slide = pres.addSlide();
+    addHeader(slide, 'جدول جامع مشخصات ورود و رمزهای عبور کاربران', 'تفکیک دسترسی مدیر ارشد و مسئولان ۸ مجموعه');
+
+    // Admin Card
+    slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
+      x: 0.85,
+      y: 1.8,
+      w: 11.63,
+      h: 1.1,
+      fill: { color: THEME.cardBg },
+      line: { color: THEME.accentPurple, width: 2 }
+    });
+
+    slide.addText('👑 مدیر کل ارشد سامانه: مدیریت کارت پرسنلی / یزدان مطهر قائم وسطی', {
+      x: 1.0,
+      y: 1.9,
+      w: 6.5,
+      h: 0.4,
+      fontSize: 13,
+      bold: true,
+      color: THEME.textWhite,
+      fontFace: THEME.fontFace,
+      align: 'right'
+    });
+
+    slide.addText('نام کاربری: admin', {
+      x: 7.7,
+      y: 1.9,
+      w: 2.2,
+      h: 0.4,
+      fontSize: 12,
+      bold: true,
+      color: THEME.accentPurple,
+      fontFace: THEME.fontFace,
+      align: 'right'
+    });
+
+    slide.addText('رمز عبور: 951753', {
+      x: 10.0,
+      y: 1.9,
+      w: 2.3,
+      h: 0.4,
+      fontSize: 13,
+      bold: true,
+      color: '34D399',
+      fontFace: THEME.fontFace,
+      align: 'right'
+    });
+
+    slide.addText('دسترسی شبکه وای‌فای: http://192.168.8.113:3000 | اشراف کامل بر تمام ۸ مجموعه', {
+      x: 1.0,
+      y: 2.4,
+      w: 11.3,
+      h: 0.35,
+      fontSize: 10.5,
+      color: THEME.textMuted,
+      fontFace: THEME.fontFace,
+      align: 'right'
+    });
+
+    // 8 Branches Grid
+    const branches = [
+      { num: '۱', name: 'هایپر آرین', officer: 'خانم رسولی', user: 'officer1', pass: '841203', color: THEME.accentBlue },
+      { num: '۲', name: 'هایپر قدمت', officer: 'خانم رضوی', user: 'officer2', pass: '729514', color: THEME.accentPurple },
+      { num: '۳', name: 'مشتاق قائمشهر', officer: 'خانم صباغی', user: 'officer3', pass: '638195', color: THEME.accentOrange },
+      { num: '۴', name: 'مشتاق آمل', officer: 'خانم مهدی پور', user: 'officer4', pass: '519482', color: THEME.accentGreen },
+      { num: '۵', name: 'مشتاق بهنمیر', officer: 'خانم باباجان زاده', user: 'officer5', pass: '926371', color: '06B6D4' },
+      { num: '۶', name: 'مشتاق نکا', officer: 'خانم صادقی', user: 'officer6', pass: '384729', color: 'F43F5E' },
+      { num: '۷', name: 'مشتاق ساری', officer: 'خانم صباغی', user: 'officer7', pass: '471938', color: '6366F1' },
+      { num: '۸', name: 'فروشگاه آرین', officer: 'خانم صباغی', user: 'officer8', pass: '652814', color: '14B8A6' }
+    ];
+
+    branches.forEach((b, idx) => {
+      const col = idx % 4;
+      const row = Math.floor(idx / 4);
+      const xPos = 0.85 + col * 2.95;
+      const yPos = 3.1 + row * 1.8;
+
+      slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
+        x: xPos,
+        y: yPos,
+        w: 2.75,
+        h: 1.6,
+        fill: { color: THEME.cardBg },
+        line: { color: b.color, width: 1.5 }
+      });
+
+      slide.addText(`${b.num}. ${b.name}`, {
+        x: xPos + 0.15,
+        y: yPos + 0.15,
+        w: 2.45,
+        h: 0.35,
+        fontSize: 13,
+        bold: true,
+        color: THEME.textWhite,
+        fontFace: THEME.fontFace,
+        align: 'right'
+      });
+
+      slide.addText(`مسئول: ${b.officer}`, {
+        x: xPos + 0.15,
+        y: yPos + 0.55,
+        w: 2.45,
+        h: 0.3,
+        fontSize: 11,
+        color: b.color,
+        fontFace: THEME.fontFace,
+        align: 'right'
+      });
+
+      slide.addText(`کاربر: ${b.user} | رمز: ${b.pass}`, {
+        x: xPos + 0.15,
+        y: yPos + 0.95,
+        w: 2.45,
+        h: 0.35,
+        fontSize: 10,
+        bold: true,
+        color: '34D399',
+        fontFace: THEME.fontFace,
+        align: 'right'
+      });
+    });
+
+    slide.addText('ورود با نام خانوادگی مسئولان نیز امکان‌پذیر است | پشتیبانی کامل بر بستر شبکه Wi-Fi', {
+      x: 0.85,
+      y: 6.8,
+      w: 11.63,
+      h: 0.35,
+      fontSize: 10,
+      color: THEME.textMuted,
+      fontFace: THEME.fontFace,
+      align: 'center'
     });
   }
 
